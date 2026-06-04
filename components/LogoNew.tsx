@@ -4,15 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 // Icons
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, RefreshCcw } from 'lucide-react';
 
-const ASCII_CHARS = ' .:-+=*rR';
+const ASCII_CHARS = ' rrRRRR';
 
 export default function LogoNew() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const isPlayingRef = useRef(true);
+  const resetRotationRef = useRef<(() => void) | null>(null);
+  const [size, setSize] = useState(400);
   
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
@@ -21,6 +23,9 @@ export default function LogoNew() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const background_color = '#0a0a0a';
+    const foreground_color = '#ffffff';
+
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, 0.1, 1000);
@@ -28,7 +33,7 @@ export default function LogoNew() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(800, 600);
-    renderer.setClearColor(0x000000);
+    renderer.setClearColor(new THREE.Color(background_color));
 
     // Right after creating the renderer
     const offscreen = document.createElement('canvas');
@@ -53,7 +58,7 @@ export default function LogoNew() {
       geometry.computeVertexNormals();
 
       const material = new THREE.MeshPhongMaterial({ 
-        color: 0xffffff,
+        color: foreground_color,
         flatShading: false
       });
       
@@ -73,55 +78,57 @@ export default function LogoNew() {
     });
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    const ambientLight = new THREE.AmbientLight(foreground_color, 250/1000);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directionalLight = new THREE.DirectionalLight(foreground_color, 0.5);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // ASCII rendering
-    const asciiWidth = 75;
-    const asciiHeight = 75;
-    
-    ctx.fillStyle = 'black';
+    // Initial canvas clear
+    ctx.fillStyle = background_color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '7px monospace';
-    ctx.fillStyle = 'white';
 
     function renderToASCII() {
       if (!mesh || !ctx || !offscreenCtx) return;
-  
+
+      // Compute grid and font size dynamically from current canvas dimensions.
+      // Target cell size (5.714px) and font/cell ratio (1.225) preserve the
+      // desktop look exactly while scaling naturally to smaller screens.
+      const cols = Math.round(canvas.width / 5.714);
+      const rows = Math.round(canvas.height / 5.714);
+      const charWidth = canvas.width / cols;
+      const charHeight = canvas.height / rows;
+      const fontSize = Math.round(charHeight * 1.225);
+
       // Render 3D scene into WebGL canvas
       renderer.render(scene, camera);
-  
+
       // Copy WebGL canvas → 2D canvas
       offscreenCtx.drawImage(renderer.domElement, 0, 0);
-  
+
       // Now safely read pixels
       const imageData = offscreenCtx.getImageData(0, 0, 800, 600);
-  
-      ctx.fillStyle = 'black';
+
+      ctx.fillStyle = background_color;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-  
-      const charWidth = canvas.width / asciiWidth;
-      const charHeight = canvas.height / asciiHeight;
-  
-      for (let y = 0; y < asciiHeight; y++) {
-        for (let x = 0; x < asciiWidth; x++) {
-          const pixelX = Math.floor((x / asciiWidth) * 800);
-          const pixelY = Math.floor((y / asciiHeight) * 600);
+      ctx.font = `${fontSize}px monospace`;
+      ctx.fillStyle = foreground_color;
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const pixelX = Math.floor((x / cols) * 800);
+          const pixelY = Math.floor((y / rows) * 600);
           const pixelIndex = (pixelY * 800 + pixelX) * 4;
-  
+
           const r = imageData.data[pixelIndex];
           const g = imageData.data[pixelIndex + 1];
           const b = imageData.data[pixelIndex + 2];
           const brightness = (r + g + b) / 3;
-  
+
           const charIndex = Math.floor((brightness / 255) * (ASCII_CHARS.length - 1));
           const char = ASCII_CHARS[charIndex];
-  
+
           ctx.fillText(char, x * charWidth, (y + 1) * charHeight);
         }
       }
@@ -190,8 +197,7 @@ export default function LogoNew() {
       requestAnimationFrame(animate);
 
       if (mesh && !isDragging && isPlayingRef.current) {
-        // Complete rotation in 30 seconds (2π radians in 30s = π/15 per second)
-        // At 60fps, that's π/900 per frame
+        // 2π radians in 30s = π/15 per second we'd have to know how many fps 
         autoRotationAngle += Math.PI / 500;
 
         rotationY = autoRotationAngle;
@@ -208,34 +214,65 @@ export default function LogoNew() {
     }
 
     animate();
+
+    // Screen size stuff
+    const updateSize = () => {
+      setSize(window.innerWidth < 500 ? 300 : 400);
+      needsRender = true;
+    };
+
+    updateSize(); // run once on mount
+    window.addEventListener('resize', updateSize);
+
+    resetRotationRef.current = () => {
+      rotationX = 0;
+      rotationY = 0;
+      autoRotationAngle = 0;
+      if (mesh) {
+        mesh.rotation.x = 0;
+        mesh.rotation.y = 0;
+      }
+      needsRender = true;
+    };
     
     // Cleanup
     return () => {
       renderer.dispose();
       scene.clear();
+      window.removeEventListener('resize', updateSize);
     };
   }, []); // Empty dependency array - only run once on mount
 
   return (
-    <div ref={containerRef} className="bg-black w-full flex flex-col items-center justify-center gap-4 p-4">
-      <div className='w-[50%] min-w-[300px]'>
+    <div ref={containerRef} className="w-full flex flex-col items-center justify-center gap-4 p-4">
+      <canvas 
+        ref={canvasRef} 
+        width={size} 
+        height={size}
+        className="cursor-grab active:cursor-grabbing"
+        style={{ imageRendering: 'pixelated' }}
+      />
+      <div className='w-full max-w-[700px] flex flex-row items-center justify-center gap-2'>
         <button
           onClick={() => {
             const newValue = !isPlayingRef.current;
             setIsPlaying(newValue);
             isPlayingRef.current = newValue;
           }}
-          className="w-8 h-8 pb-[2px] bg-black text-white border border-gray-500 rounded hover:bg-gray-400 hover:text-black transition-colors">
+          className="w-8 h-8 pb-[2px] border border-gray-500 rounded hover:bg-gray-400 transition-colors">
           {isPlaying ? <Pause color="#6a7282" strokeWidth={1.5} className="inline-block w-5 h-5" /> : <Play color="#6a7282" strokeWidth={1.5}  className="inline-block w-5 h-5" />}
         </button>
+        <button
+          onClick={() => {
+            // reset rotation
+            isPlayingRef.current = false;
+            setIsPlaying(false);
+            resetRotationRef.current?.();
+          }}
+          className="w-8 h-8 pb-[2px] border border-gray-500 rounded hover:bg-gray-400 transition-colors">
+          {<RefreshCcw color="#6a7282" strokeWidth={1.5} className="inline-block w-5 h-5" />}
+        </button>
       </div>
-      <canvas 
-        ref={canvasRef} 
-        width={400} 
-        height={400}
-        className="bg-black cursor-grab active:cursor-grabbing"
-        style={{ imageRendering: 'pixelated' }}
-      />
     </div>
   );
 }
