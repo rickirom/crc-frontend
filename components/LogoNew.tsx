@@ -31,7 +31,7 @@ export default function LogoNew() {
     const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, 0.1, 1000);
     camera.position.z = 10;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     renderer.setSize(800, 600);
     renderer.setClearColor(new THREE.Color(background_color));
 

@@ -30,10 +30,11 @@ export default function AboutSection() {
 
           <div className="space-y-5">
             <div className="space-y-3 font-mono text-sm text-gray-300 leading-relaxed">
+
               <p>
-                I&apos;m an electronics engineer who ended up fully hooked on cloud infrastructure,
-                security, and DevOps. I enjoy the intersection of deep technical work and helping
-                teams actually ship things.
+                With a background in electronics engineering, I had a strong interest in how computers
+                and software work. This led me to find a passion for cloud infrastructure automation 
+                and security. I enjoy the intersection of deep technical work and helping teams ship 🚀
               </p>
               <p>
                 Currently at HashiCorp as a Solutions Engineer, I work with enterprise customers

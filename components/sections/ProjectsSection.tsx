@@ -1,63 +1,13 @@
 import Image from 'next/image'
 import { ExternalLink } from 'lucide-react'
-
-const PROJECTS = [
-  {
-    title: 'Cloud Resume Challenge',
-    subtitle: 'This website',
-    description:
-      'Full-stack cloud resume using AWS S3, CloudFront, Route53, and Lambda for the backend API. Infrastructure provisioned with Terraform and deployed via CI/CD pipelines.',
-    image: '/cloud_resume.png',
-    tags: ['AWS', 'Terraform', 'Lambda', 'CI/CD', 'Python'],
-    link: {
-      label: 'GitHub',
-      href: 'https://github.com/ricardorompar/cloudResumeChallenge',
-    },
-  },
-  {
-    title: '3DOF Helicopter',
-    subtitle: "Bachelor's thesis",
-    description:
-      'Low-cost 3-DOF helicopter testbench controlled by hand gestures and arm movements using a Myo Armband. Demonstrated effective multimodal control via gesture recognition and IMU data.',
-    image: '/3dof.png',
-    tags: ['Python', 'Myo Armband', 'Control Systems', 'IMU'],
-    link: {
-      label: 'Thesis',
-      href: 'https://bibdigital.epn.edu.ec/handle/15000/22245',
-    },
-  },
-  {
-    title: 'Wingy',
-    subtitle: "Master's capstone",
-    description:
-      'Stock visualizer web app built with Flask and React, deployed on Oracle Cloud and GCP. Enabled real-time equity data visualization and portfolio tracking.',
-    image: '/wingy.png',
-    tags: ['Flask', 'React', 'Oracle Cloud', 'GCP', 'Python'],
-    link: {
-      label: 'GitHub',
-      href: 'https://github.com/ricardorompar/capstoneT2',
-    },
-  },
-  {
-    title: 'FastAPI + MongoDB',
-    subtitle: 'End of master project',
-    description:
-      'Full-stack app migrating the FastAPI full-stack template from PostgreSQL to MongoDB. Built with FastAPI and React, running on GCP with Docker. Supports all CRUD operations on users and items.',
-    image: '/mongo_mockup.png',
-    tags: ['FastAPI', 'React', 'MongoDB', 'GCP', 'Docker'],
-    link: {
-      label: 'GitHub',
-      href: 'https://github.com/ricardorompar/full-stack-fastapi-mongo-template',
-    },
-  },
-]
+import { RESUME } from '@/lib/resume'
 
 export default function ProjectsSection() {
   return (
     <section id="projects" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="space-y-2">
-          <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">// projects</h2>
+          <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">{/* projects */}</h2>
           <p className="font-mono text-sm text-gray-500">
             A few things I&apos;ve built. More on{' '}
             <a
@@ -73,7 +23,7 @@ export default function ProjectsSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {PROJECTS.map((project) => (
+          {RESUME.projects.map((project) => (
             <div
               key={project.title}
               className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden flex flex-col hover:border-gray-600 transition-colors duration-300"

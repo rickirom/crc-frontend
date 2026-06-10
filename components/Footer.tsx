@@ -6,7 +6,7 @@ export default function Footer() {
           © {new Date().getFullYear()} Ricardo Romero
         </p>
         <p className="font-mono text-xs text-gray-700">
-          built with Next.js · hosted on AWS
+          built with ♥ by R2
         </p>
       </div>
     </footer>
