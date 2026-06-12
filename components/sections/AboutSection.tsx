@@ -13,7 +13,7 @@ export default function AboutSection() {
   return (
     <section id="about" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
-        <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">// about</h2>
+        <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">{/* about */}</h2>
 
         <div className="flex flex-col sm:flex-row gap-10 items-start">
           <div className="shrink-0 self-center sm:self-start">

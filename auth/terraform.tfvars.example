@@ -1,0 +1,16 @@
+aws_region = "us-east-1"
+
+# ── GitHub Actions ─────────────────────────────────────────────────────────────
+github_org       = "my-org"
+github_repo      = "my-repo"
+github_role_name = "github-actions-deploy"
+
+# ── HCP Terraform ──────────────────────────────────────────────────────────────
+hcpt_org_name       = "my-hcpt-org"
+hcpt_project_name   = "my-project"
+hcpt_workspace_name = "my-workspace"   # use "*" to allow all workspaces in the project
+hcpt_role_name      = "hcpt-deploy"
+
+# ── Deployment targets ─────────────────────────────────────────────────────────
+s3_bucket_name             = "my-frontend-bucket"
+cloudfront_distribution_id = "EXXXXXXXXXXXX"
