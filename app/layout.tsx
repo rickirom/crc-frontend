@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans } from "next/font/google";
-import { Source_Code_Pro } from "next/font/google";
+import { IBM_Plex_Sans, Source_Code_Pro, Krona_One } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 
@@ -16,6 +15,12 @@ const sourceCodePro = Source_Code_Pro({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+const kronaOne = Krona_One({
+  variable: "--font-krona-one",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   title: "Ricardo: engineer",
   description: "rickirom's website",
@@ -28,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.variable} ${sourceCodePro.variable} antialiased`}>
+      <body className={`${ibmPlexSans.variable} ${sourceCodePro.variable} ${kronaOne.variable} antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

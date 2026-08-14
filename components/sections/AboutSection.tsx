@@ -1,9 +1,11 @@
 import Image from 'next/image'
+import { ScrambleText } from '../UI/ScrambleText'
+import { ScrambleTextOnLoad } from '../UI/ScrambleTextOnLoad'
 
 const INTERESTS = [
   'Running',
   'Music',
-  'Cloud Infrastructure',
+  'Infra and DevOps',
   'AI',
   'DevOps',
   'Tech & Science',
@@ -13,28 +15,32 @@ export default function AboutSection() {
   return (
     <section id="about" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
-        <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">{/* about */}</h2>
+        <h2 className="font-mono text-xs text-gray-500 tracking-widest">/ about</h2>
 
         <div className="flex flex-col sm:flex-row gap-10 items-start">
 
           <div className="space-y-5">
+            <h1 className="space-y-3 font-title font-bold text-[2rem] sm:text-[3rem] text-white leading-relaxed">
+                Hi I&apos;m{" "}
+                <ScrambleText values={["Ricardo", "rickirom", "ricardorompar", "riki.sh"]} />
+            </h1>
+            <h2 className="space-y-3 font-title font-bold text-[0.5rem] sm:text-[1rem] text-white leading-relaxed">
+              <ScrambleTextOnLoad
+                values={["Solutions Engineer", "DevOps Practitioner", "An atom in the universe", "A universe of atoms" , 
+                         "Electronics Engineer", "Husband, friend, son, brother", "Beer enthusiast", "Occasional taco eater", 
+                         "Tech wanderer", "Homelabber", "Runner", "Keep on reloading this page ;)", "Guitar player (average)", 
+                         "Your technical advisor", "Terraform and Vault pro"]}
+              />
+            </h2>
             <div className="space-y-3 font-mono text-sm text-gray-300 leading-relaxed">
-
               <p>
-                With a background in electronics engineering, I had a strong interest in how computers
-                and software work. This led me to find a passion for cloud infrastructure automation 
-                and security. I enjoy the intersection of deep technical work and helping teams ship 🚀
+                I like building things with technology. Sometimes demos for customers, MVPs, experiments in my homelab, or a personal website. Some other times it&apos;s presentations or workshops to explain technical concepts. My focus is on finding out how technology can help organizations achieve their goals.
+              </p>
+              <p className="font-mono text-sm text-gray-300">
+                Currently helping businesses <span className="text-gray-400"><a href="https://www.hashicorp.com/" target="_blank" rel="noopener noreferrer">do cloud right @HashiCorp</a></span>
               </p>
               <p>
-                Currently at HashiCorp as a Solutions Engineer, I work with enterprise customers
-                to design infrastructure strategies around Terraform, Vault, and Boundary, etc.,
-                translating complex engineering into real business outcomes.
-              </p>
-              <p>
-                Before that, I graduated with a Master&apos;s in CS & Business Technology from IE
-                University and a Bachelor&apos;s in Electronics & Control Engineering from{' '}
-                <abbr title="Escuela Politécnica Nacional">EPN</abbr> in Ecuador, where I was born
-                and raised.
+                Outside of work I&apos;m a husband, a friend, a son, and a brother. Always playing around with tech and AI. Ocasionally a beer and taco enthusiast. Like the rest of us, just an atom in the universe, a universe of atoms. Always wondering about life.
               </p>
             </div>
 

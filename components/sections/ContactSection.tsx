@@ -43,7 +43,7 @@ export default function ContactSection() {
     <section id="contact" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="space-y-2">
-          <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">// contact</h2>
+          <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest"></h2>
           <p className="font-mono text-sm text-gray-400">
             Have a question or want to work together? Get in touch.
           </p>

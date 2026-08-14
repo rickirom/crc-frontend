@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-ibm-plex-sans);
   --font-mono: var(--font-source-code-pro);
+  --font-title: var(--font-krona-one);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,5 +27,5 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-family: var(--font-source-code-pro), sans-serif;
 }
