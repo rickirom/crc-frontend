@@ -16,17 +16,6 @@ export default function AboutSection() {
         <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">{/* about */}</h2>
 
         <div className="flex flex-col sm:flex-row gap-10 items-start">
-          <div className="shrink-0 self-center sm:self-start">
-            <div className="relative w-36 h-36 rounded-full overflow-hidden border border-gray-700">
-              <Image
-                src="/profile.jpg"
-                alt="Ricardo Romero"
-                fill
-                className="object-cover"
-                sizes="144px"
-              />
-            </div>
-          </div>
 
           <div className="space-y-5">
             <div className="space-y-3 font-mono text-sm text-gray-300 leading-relaxed">

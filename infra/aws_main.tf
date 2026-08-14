@@ -7,43 +7,44 @@ resource "aws_s3_bucket" "crc_bucket" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket_website_configuration" "crc_website" {
-  bucket = aws_s3_bucket.crc_bucket.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "error.html"
-  }
-}
-
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket                  = aws_s3_bucket.crc_bucket.id
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
-#i need to access the bucket from the internet so:
-resource "aws_s3_bucket_policy" "hosting_bucket_policy" {
-  bucket = aws_s3_bucket.crc_bucket.id
+data "aws_iam_policy_document" "origin_bucket_policy" {
+  statement {
+    sid    = "AllowCloudFrontServicePrincipalReadWrite"
+    effect = "Allow"
 
-  depends_on = [aws_s3_bucket_public_access_block.public_access] #otherwise we get a permission denied error
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
 
-  policy = jsonencode({
-    "Version" : "2012-10-17"
-    "Statement" : [
-      {
-        "Effect" : "Allow"
-        "Principal" : "*"
-        "Action" : "s3:GetObject"
-        "Resource" : "${aws_s3_bucket.crc_bucket.arn}/*"
-      }
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
     ]
-  })
+
+    resources = [
+      "${aws_s3_bucket.crc_bucket.arn}/*",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.site.arn]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "origin_bucket_policy" {
+  bucket = aws_s3_bucket.crc_bucket.id
+  policy = data.aws_iam_policy_document.origin_bucket_policy.json
 }
 
 #######################################
@@ -91,6 +92,7 @@ resource "aws_cloudfront_distribution" "site" {
   is_ipv6_enabled     = true
   comment             = var.domain_name
   default_root_object = "index.html"
+  aliases             = ["${var.environment}.${var.domain_name}"]
 
   origin {
     origin_id                = "s3-${aws_s3_bucket.crc_bucket.id}"
@@ -119,7 +121,7 @@ resource "aws_cloudfront_distribution" "site" {
   custom_error_response {
     error_code         = 404
     response_code      = 200
-    response_page_path = "/index.html"
+    response_page_path = "/404.html"
   }
 
   restrictions {

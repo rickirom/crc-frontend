@@ -1,6 +1,6 @@
 data "cloudflare_zone" "r2" {
   filter = {
-    name = var.cloudflare_domain
+    name = var.domain_name
   }
 }
 
@@ -25,8 +25,8 @@ resource "cloudflare_dns_record" "cert_validation" {
 
 resource "cloudflare_dns_record" "website" {
   zone_id = data.cloudflare_zone.r2.id
-  name    = "${var.environment}.${var.cloudflare_domain}"
-  content = aws_s3_bucket_website_configuration.crc_website.website_endpoint
+  name    = "${var.environment}.${var.domain_name}"
+  content = aws_cloudfront_distribution.site.domain_name
   type    = "CNAME"
   ttl     = 60
   proxied = false

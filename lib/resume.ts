@@ -16,7 +16,7 @@ export const RESUME = {
       period: 'Aug 2024 – Present',
       location: 'Madrid, Spain',
       bullets: [
-        'Closed 10+ deals in first 5 months of being part of the Corporate team, contributing to $1M+ pipeline growth',
+        'Closed 5+ deals in first 5 months of being part of the Corporate team, contributing to $500k+ pipeline growth',
         'Influenced $10M+ ARR in first 6 months through technical sales cycles as part of the Hub team',
         'Led technical webinars and workshops on Terraform, Vault, and Boundary for enterprise clients',
         'Architected cloud infrastructure solutions aligned with the HashiCorp product suite',

@@ -28,7 +28,7 @@ const GitHub = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
-const VISITOR_COUNTER_URL = '#' // Replace with actual Lambda/API Gateway URL
+const VISITOR_COUNTER_URL = 'https://vlt33ldw66.execute-api.eu-central-1.amazonaws.com/increment' // Replace with actual Lambda/API Gateway URL
 
 const NAV_ITEMS = [
   { label: 'Resume', href: '#resume' },
@@ -37,15 +37,32 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '#contact' },
 ]
 
+interface VisitorCountResponse {
+  views: number;
+}
+
 export default function Navbar() {
   const [visitors, setVisitors] = useState<number | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    fetch(VISITOR_COUNTER_URL)
-      .then((r) => r.json())
-      .then((data) => setVisitors(data.count))
+    const controller = new AbortController()
+
+    fetch(VISITOR_COUNTER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error(`Request failed: ${r.status}`)
+        return r.json() as Promise<VisitorCountResponse>
+      })
+      .then((data) => setVisitors(data.views))
       .catch(() => {})
+
+    return () => controller.abort()
   }, [])
 
   // Prevent body scroll when mobile menu is open
@@ -102,8 +119,8 @@ export default function Navbar() {
               <LinkedIn className="w-4 h-4" />
             </a>
             {visitors !== null && (
-              <span className="font-mono text-xs text-gray-600 border border-gray-800 px-2 py-1">
-                {visitors.toLocaleString()} visitors
+              <span className="font-mono text-gray-600 border border-gray-800 px-2 py-1">
+                {visitors.toLocaleString()} visits
               </span>
             )}
           </div>
@@ -186,7 +203,7 @@ export default function Navbar() {
           </div>
           {visitors !== null && (
             <span className="font-mono text-xs text-gray-600 border border-gray-800 px-3 py-1.5">
-              {visitors.toLocaleString()} visitors
+              {visitors.toLocaleString()} visits
             </span>
           )}
         </nav>
