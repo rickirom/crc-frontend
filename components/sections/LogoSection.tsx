@@ -10,7 +10,7 @@ const ROLES = [
   'Electronics Engineer',
 ]
 
-export default function HeroSection() {
+export default function LogoSection() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [displayed, setDisplayed] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)

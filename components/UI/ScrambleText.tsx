@@ -25,7 +25,7 @@ export function ScrambleText({
   speed = 20,
   scrambleSteps = 5,
   className,
-  scrambleColor = "#00fbff",
+  scrambleColor = "var(--color-accent)",
 }: ScrambleTextProps) {
   const [index, setIndex] = useState(0); // which of values[] is "current"
   const [color, setColor] = useState('inherit')
@@ -72,16 +72,16 @@ export function ScrambleText({
             out += CHARS[Math.floor(Math.random() * CHARS.length)];
           }
         }
-        const brightness = Math.round(((maxTick-tick)/(maxTick == 0? 1:maxTick))*255).toString(16);
+        const alphaPct = Math.round(((maxTick - tick) / (maxTick === 0 ? 1 : maxTick)) * 100);
+        setColor(`color-mix(in srgb, ${scrambleColor} ${alphaPct}%, transparent)`);
 
-        setColor(scrambleColor+brightness);
         setDisplay(out);
         tick++;
 
         if (tick > maxTick) {
           if (frameRef.current) window.clearInterval(frameRef.current);
           setDisplay(target); // guarantee it ends exactly right
-          setColor('inherit');
+          setColor("transparent");
         }
       }, speed);
     },

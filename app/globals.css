@@ -3,14 +3,33 @@
 :root {
   --foreground: #ffffff;
   --background: #0a0a0a;
+  --accent: #00ffbb;
+  --secondary: #959595;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-secondary: var(--secondary);
   --font-sans: var(--font-ibm-plex-sans);
   --font-mono: var(--font-source-code-pro);
   --font-title: var(--font-krona-one);
+}
+
+.alink{
+  color: var(--color-secondary);
+  transition: all 0.3s ease;
+  border-bottom: dashed 1px;
+  border-color: transparent;
+}
+
+.alink:hover {
+  color: var(--color-accent); /* or whatever you want on hover */
+  /* text-decoration-line: underline;
+  text-decoration-style: dashed; */
+  border-bottom: dashed 1px;
+  border-color: var(--color-accent);
 }
 
 @media (prefers-color-scheme: dark) {

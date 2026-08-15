@@ -24,7 +24,7 @@ export default function AboutSection() {
                 Hi I&apos;m{" "}
                 <ScrambleText values={["Ricardo", "rickirom", "ricardorompar", "riki.sh"]} />
             </h1>
-            <h2 className="space-y-3 font-title font-bold text-[0.5rem] sm:text-[1rem] text-white leading-relaxed">
+            <h2 className="space-y-3 font-title font-bold text-[1rem] text-white leading-relaxed">
               <ScrambleTextOnLoad
                 values={["Solutions Engineer", "DevOps Practitioner", "An atom in the universe", "A universe of atoms" , 
                          "Electronics Engineer", "Husband, friend, son, brother", "Beer enthusiast", "Occasional taco eater", 
@@ -37,7 +37,7 @@ export default function AboutSection() {
                 I like building things with technology. Sometimes demos for customers, MVPs, experiments in my homelab, or a personal website. Some other times it&apos;s presentations or workshops to explain technical concepts. My focus is on finding out how technology can help organizations achieve their goals.
               </p>
               <p className="font-mono text-sm text-gray-300">
-                Currently helping businesses <span className="text-gray-400"><a href="https://www.hashicorp.com/" target="_blank" rel="noopener noreferrer">do cloud right @HashiCorp</a></span>
+                Currently helping businesses <a className='alink' href="https://www.hashicorp.com/" target="_blank" rel="noopener noreferrer">do cloud right @HashiCorp</a>
               </p>
               <p>
                 Outside of work I&apos;m a husband, a friend, a son, and a brother. Always playing around with tech and AI. Ocasionally a beer and taco enthusiast. Like the rest of us, just an atom in the universe, a universe of atoms. Always wondering about life.

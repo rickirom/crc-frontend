@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     ? {}
     : {
         output: 'export',
+        trailingSlash: true, // important for S3, see below
         images: {
           unoptimized: true,
         },
