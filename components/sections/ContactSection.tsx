@@ -1,30 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Github, Linkedin, Twitter, Instagram, Send } from 'lucide-react'
-
-const SOCIAL_LINKS = [
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/in/ricardorompar',
-    icon: Linkedin,
-  },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/ricardorompar',
-    icon: Github,
-  },
-  {
-    label: 'Twitter / X',
-    href: 'https://x.com/ricardorompar',
-    icon: Twitter,
-  },
-  {
-    label: 'Instagram',
-    href: 'https://instagram.com/ricardorompar',
-    icon: Instagram,
-  },
-]
+import { Send } from 'lucide-react'
 
 export default function ContactSection() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -40,7 +17,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6 ">
+    <section id="contact" className="py-24 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="space-y-2">
           <h2 className="font-mono text-xs text-gray-500 tracking-widest">/ contact</h2>
@@ -49,9 +26,9 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
+        <div className="flex justify-center">
           {/* Contact form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="w-100 space-y-4">
             <div className="space-y-1">
               <label htmlFor="name" className="font-mono text-xs text-gray-500">
                 name
@@ -112,26 +89,6 @@ export default function ContactSection() {
               </button>
             )}
           </form>
-
-          {/* Social links */}
-          <div className="space-y-4">
-            <p className="font-mono text-xs text-gray-500">or find me here</p>
-            <ul className="space-y-3">
-              {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 font-mono text-sm text-gray-400 hover:text-white transition-colors group"
-                  >
-                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
     </section>

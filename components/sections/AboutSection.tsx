@@ -10,6 +10,24 @@ const INTERESTS = [
   'Tech & Science',
 ]
 
+const scrambleValues = [
+    "Solutions Engineer", 
+    "DevOps Practitioner", 
+    "An atom in the universe", 
+    "A universe of atoms" , 
+    "Electronics Engineer", 
+    "Husband, friend, son, brother", 
+    "Beer enthusiast", 
+    "Occasional taco eater", 
+    "Tech wanderer", 
+    "Homelabber", 
+    "Runner", 
+    "Keep on reloading this page ;)", 
+    "Guitar player (average)", 
+    "Your technical advisor", 
+    "Terraform and Vault pro"
+]
+
 const LINKS = {
   "Github": { link: "https://github.com/rickirom", Icon: GitHub },
   "LinkedIn": { link: "https://linkedin.com/in/rickirom", Icon: LinkedIn },
@@ -21,7 +39,7 @@ const LINKS = {
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-14 px-6 border-t border-gray-800">
+    <section id="about" className="pt-30 px-6 border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
         
 
@@ -34,16 +52,13 @@ export default function AboutSection() {
             </h1>
             <h2 className="space-y-3 font-title font-bold text-[1rem] text-white leading-relaxed">
               <ScrambleTextOnLoad
-                values={["Solutions Engineer", "DevOps Practitioner", "An atom in the universe", "A universe of atoms" , 
-                         "Electronics Engineer", "Husband, friend, son, brother", "Beer enthusiast", "Occasional taco eater", 
-                         "Tech wanderer", "Homelabber", "Runner", "Keep on reloading this page ;)", "Guitar player (average)", 
-                         "Your technical advisor", "Terraform and Vault pro"]}
+                values={scrambleValues}
               />
             </h2>
                     
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
                 {Object.entries(LINKS).map(([label, { link, Icon }]) => (
-                  <div key={label} className='border border-solid rounded-sm text-xs text-gray-300 hover:border-accent hover:text-accent transition-all duration-300'>
+                  <div key={label} className='border border-solid rounded-sm text-xs text-gray-300 hover:border-accent hover:text-accent hover:border-dashed transition-all duration-300'>
                     <a href={link} target="_blank" rel="noopener noreferrer" className='flex flex-row p-1'>
                         <Icon className='h-4'></Icon>
                         {label}
