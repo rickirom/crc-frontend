@@ -1,21 +1,29 @@
-import Image from 'next/image'
 import { ScrambleText } from '../UI/ScrambleText'
 import { ScrambleTextOnLoad } from '../UI/ScrambleTextOnLoad'
+import { LinkedIn, GitHub, Instagram, X, Mail, WhatsApp } from '../UI/SocialLogos'
 
 const INTERESTS = [
   'Running',
   'Music',
   'Infra and DevOps',
   'AI',
-  'DevOps',
   'Tech & Science',
 ]
 
+const LINKS = {
+  "Github": { link: "https://github.com/rickirom", Icon: GitHub },
+  "LinkedIn": { link: "https://linkedin.com/in/rickirom", Icon: LinkedIn },
+  "X/Twitter": { link: "https://twitter.com/rickirom_", Icon: X },
+  "Instagram": { link: "https://instagram.com/rickirom_", Icon: Instagram},
+  "WhatsApp": { link: "https://wa.me/34664421942", Icon: WhatsApp},
+  "Mail": { link: "mailto:ricardorompar@hotmail.com", Icon: Mail}
+} as const;
+
 export default function AboutSection() {
   return (
-    <section id="about" className="py-24 px-6 border-t border-gray-800">
+    <section id="about" className="py-14 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
-        <h2 className="font-mono text-xs text-gray-500 tracking-widest">/ about</h2>
+        
 
         <div className="flex flex-col sm:flex-row gap-10 items-start">
 
@@ -32,6 +40,20 @@ export default function AboutSection() {
                          "Your technical advisor", "Terraform and Vault pro"]}
               />
             </h2>
+                    
+            <div className="flex gap-2">
+                {Object.entries(LINKS).map(([label, { link, Icon }]) => (
+                  <div key={label} className='border border-solid rounded-sm text-xs text-gray-300 hover:border-accent hover:text-accent transition-all duration-300'>
+                    <a href={link} target="_blank" rel="noopener noreferrer" className='flex flex-row p-1'>
+                        <Icon className='h-4'></Icon>
+                        {label}
+                    </a>
+                  </div>
+                ))}
+            </div>
+
+            <h2 className="font-mono text-xs text-gray-500 tracking-widest mt-15">/ about</h2>
+
             <div className="space-y-3 font-mono text-sm text-gray-300 leading-relaxed">
               <p>
                 I like building things with technology. Sometimes demos for customers, MVPs, experiments in my homelab, or a personal website. Some other times it&apos;s presentations or workshops to explain technical concepts. My focus is on finding out how technology can help organizations achieve their goals.
@@ -40,7 +62,7 @@ export default function AboutSection() {
                 Currently helping businesses <a className='alink' href="https://www.hashicorp.com/" target="_blank" rel="noopener noreferrer">do cloud right @HashiCorp</a>
               </p>
               <p>
-                Outside of work I&apos;m a husband, a friend, a son, and a brother. Always playing around with tech and AI. Ocasionally a beer and taco enthusiast. Like the rest of us, just an atom in the universe, a universe of atoms. Always wondering about life.
+                Outside of work I&apos;m a husband, a friend, a son and a brother. Always playing around with tech and AI. Occasionally a beer and taco enthusiast. Like the rest of us, I&apos;m just an atom in the universe, a universe of atoms. Always wondering about life.
               </p>
             </div>
 

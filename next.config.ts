@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     ? {}
     : {
         output: 'export',
-        trailingSlash: true, // important for S3, see below
+        trailingSlash: true, // important for S3. It tells S3 to export different pages in different paths.
         images: {
           unoptimized: true,
         },
