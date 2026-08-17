@@ -16,12 +16,14 @@ const scrambleValues = [
     "An atom in the universe", 
     "A universe of atoms" , 
     "Electronics Engineer", 
+    "Vibe coder",
     "Husband, friend, son, brother", 
     "Beer enthusiast", 
     "Occasional taco eater", 
     "Tech wanderer", 
     "Homelabber", 
     "Runner", 
+    "AI tinkerer",
     "Keep on reloading this page ;)", 
     "Guitar player (average)", 
     "Your technical advisor", 
@@ -48,11 +50,11 @@ export default function AboutSection() {
           <div className="space-y-5">
             <h1 className="space-y-3 font-title font-bold text-[2rem] sm:text-[3rem] text-white leading-relaxed">
                 Hi I&apos;m{" "}
-                <ScrambleText values={["Ricardo", "rickirom", "ricardorompar", "riki.sh"]} />
+                <ScrambleText values={["Ricardo", "rickirom", "ricardorompar", "riki.sh"]} className='border-gray-500' />
             </h1>
             <h2 className="space-y-3 font-title font-bold text-[1rem] text-white leading-relaxed">
               <ScrambleTextOnLoad
-                values={scrambleValues}
+                values={scrambleValues} className='text-accent'
               />
             </h2>
                     
