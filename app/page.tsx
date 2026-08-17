@@ -14,7 +14,6 @@ export default function Home() {
       <main>
         <AboutSection />
         <LogoNew />
-        <ContactSection />
       </main>
       <Footer />
     </>
