@@ -104,7 +104,7 @@ export function ScrambleText({
     <span
       onMouseEnter={handleHover}
       className={className}
-      style={{ cursor: "pointer", display: "inline-block", backgroundColor: color, borderBottom: "dashed 1px", borderColor: "gray"}}
+      style={{ cursor: "pointer", display: "inline-block", backgroundColor: color, borderBottom: "dashed 1px"}}
       aria-label={values[index]}
     >
       {display}
