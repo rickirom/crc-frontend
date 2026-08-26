@@ -3,6 +3,9 @@ import { IBM_Plex_Sans, Source_Code_Pro, Krona_One } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 
+import Navbar from '@/components/Navbar'
+import Footer from "@/components/Footer";
+
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
@@ -34,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ibmPlexSans.variable} ${sourceCodePro.variable} ${kronaOne.variable} antialiased`}>
+        <Navbar/>
         <ThemeProvider>{children}</ThemeProvider>
+        <Footer />
       </body>
     </html>
   );

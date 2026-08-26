@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
+import Link from 'next/link'
 
 
 const VISITOR_COUNTER_URL = 'https://vlt33ldw66.execute-api.eu-central-1.amazonaws.com/increment' // Replace with actual Lambda/API Gateway URL
 
 const NAV_ITEMS = [
-  { id: 'home', label: 'home', href: '#' },
-  { id: 'work', label: 'work', href: '#' },
-  { id: 'projects', label: 'projects', href: '#' },
-  { id: 'contact', label: 'contact', href: '#' },
+  { id: 'home', label: 'home', href: '/' },
+  { id: 'work', label: 'work', href: '/work' },
+  { id: 'projects', label: 'projects', href: '/projects' },
+  { id: 'contact', label: 'contact', href: '/contact' },
 ]
 
 interface VisitorCountResponse {
@@ -22,6 +23,7 @@ interface VisitsBadgeProps extends VisitorCountResponse {
 }
 
 type NavId = typeof NAV_ITEMS[number]['id']
+
 
 // Visits badge:
 function VisitsBadge({views, isExpanded}: VisitsBadgeProps){
@@ -40,20 +42,21 @@ function NavList({ items, onSelect, className, selected }: {
   onSelect: (id: string) => void
   className?: string
   selected: NavId
-}) {
+}){
+
   items = items.filter(i => i.id !== selected)
 
   return (
     <nav className={className}>
       {items.map(({ id, label, href }) => (
-        <a key={id} 
+        <Link key={id} 
            href={href} 
            onClick={() => onSelect(id)} 
            aria-current={id === selected ? 'page' : undefined}
            className="px-3 py-1.5 text-gray-400 alink"
         >
           {label}
-        </a>
+        </Link>
       ))}
     </nav>
   )
@@ -63,7 +66,7 @@ function NavList({ items, onSelect, className, selected }: {
 export default function Navbar() {
   const [visitors, setVisitors] = useState<number | null>(null)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [selectedId, setSelectedId] = useState<NavId>('home')  //which item is showing in the "collapsed" state
+  const [selectedId, setSelectedId] = useState<NavId>("home")  //which item is showing in the "collapsed" state
 
   function selectAndCollapse(item: string){
     setSelectedId(item);
@@ -116,7 +119,7 @@ export default function Navbar() {
           {/* Invisible links. AKA ExpandedPanel (ON DESKTOP)*/}
           <div className="grid grid-cols-[0fr] group-hover:grid-cols-[1fr] transition-[grid-template-columns] duration-300 ease-out">
             <div className="overflow-hidden">
-              <NavList items={NAV_ITEMS} onSelect={selectAndCollapse} selected={selectedId}
+                <NavList items={NAV_ITEMS} onSelect={selectAndCollapse} selected={selectedId}
                 className="flex items-center gap-1 font-mono text-sm opacity-0 group-hover:opacity-100 group-hover:delay-100 transition-opacity duration-200"/>
             </div>
           </div>
@@ -128,7 +131,7 @@ export default function Navbar() {
         {/* Invisible links. AKA ExpandedPanel (ON MOBILE)*/}
         <div className={`grid ${isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"} transition-[grid-template-rows] duration-300 ease-out`}>
           <div className="overflow-hidden">
-            <NavList items={NAV_ITEMS} onSelect={selectAndCollapse} selected={selectedId}
+              <NavList items={NAV_ITEMS} onSelect={selectAndCollapse} selected={selectedId} 
               className={`flex justify-center mt-5 items-center gap-1 font-mono text-sm ${isExpanded ? "opacity-100 delay-100" : "opacity-0"} transition-opacity duration-200`}/>
           </div>
         </div>

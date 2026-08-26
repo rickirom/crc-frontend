@@ -6,6 +6,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
+        <h2 className="font-mono text-xs text-gray-500 tracking-widest">/projects</h2>
         <div className="space-y-2">
           <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">{/* projects */}</h2>
           <p className="font-mono text-sm text-gray-500">

@@ -2,8 +2,8 @@ export const RESUME = {
   name: 'Ricardo Romero',
   city: 'Madrid, Spain',
   email: 'ricardorompar@hotmail.com',
-  linkedin: '/in/ricardorompar',
-  github: '/ricardorompar',
+  linkedin: '/in/rickirom',
+  github: '/rickirom',
   phone: '+34 664 421 942',
 
   summary:
@@ -16,10 +16,11 @@ export const RESUME = {
       period: 'Aug 2024 – Present',
       location: 'Madrid, Spain',
       bullets: [
-        'Closed 5+ deals in first 5 months of being part of the Corporate team, contributing to $500k+ pipeline growth',
-        'Influenced $10M+ ARR in first 6 months through technical sales cycles as part of the Hub team',
-        'Led technical webinars and workshops on Terraform, Vault, and Boundary for enterprise clients',
-        'Architected cloud infrastructure solutions aligned with the HashiCorp product suite',
+        'Developed demos, documentation and presentations to support technical engagements for the wider team.',
+        'Closed multiple deals as part of the Corporate SE team, contributing to $500k+ pipeline growth in the first year.',
+        'Influenced $10M+ ARR in first 6 months through technical engagements with Enterprise customers as part of the SE Hub team.',
+        'Led technical webinars and workshops on Terraform, Vault, and Boundary for various Enterprise clients.',
+        'Architected cloud infrastructure solutions aligned with the HashiCorp product suite.',
       ],
     },
     {
@@ -125,6 +126,12 @@ export const RESUME = {
   ],
 
   certs: [
+    {
+      name: 'HashiCorp Certified: Terraform Authoring and Operations Professional',
+      issuer: 'HashiCorp / IBM',
+      date: 'Aug 2026',
+      link: 'https://www.credly.com/badges/d35068b5-b73b-40e1-80d0-f30548c924f8/public_url',
+    },
     {
       name: 'AWS Certified Cloud Practitioner',
       issuer: 'AWS',

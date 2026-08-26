@@ -7,7 +7,7 @@ export default function ResumeSection() {
   return (
     <section id="resume" className="py-24 px-6 border-t border-gray-800">
       <div className="max-w-3xl mx-auto space-y-16">
-        <h2 className="font-mono text-xs text-gray-500 uppercase tracking-widest">/{/* resume */}</h2>
+        <h2 className="font-mono text-xs text-gray-500 tracking-widest">/work</h2>
 
         {/* Summary */}
         <p className="font-mono text-sm text-gray-300 leading-relaxed">
