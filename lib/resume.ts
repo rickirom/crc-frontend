@@ -7,7 +7,7 @@ export const RESUME = {
   phone: '+34 664 421 942',
 
   summary:
-    'Solutions Engineer with 3+ years in client-facing technical roles. Passionate about AI, cloud infrastructure, security, and DevOps. Bridging the gap between engineering depth and business value.',
+    'Solutions Engineer with 4+ years in client-facing technical roles. Passionate about AI, cloud infrastructure, security, and DevOps. Bridging the gap between engineering depth and business value.',
 
   experience: [
     {
