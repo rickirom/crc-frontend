@@ -8,6 +8,7 @@ const INTERESTS = [
   'Infra and DevOps',
   'AI',
   'Tech & Science',
+  'NHIs'
 ]
 
 const scrambleValues = [
@@ -73,7 +74,7 @@ export default function AboutSection() {
 
             <div className="space-y-3 font-mono text-sm text-gray-300 leading-relaxed">
               <p>
-                I like building things with technology. Sometimes demos for customers, MVPs, experiments in my homelab, or a personal website. Some other times it&apos;s presentations or workshops to explain technical concepts. My focus is on finding out how technology can help organizations achieve their goals.
+                I like building things with technology. Sometimes <a className='alink' href="https://github.com/hashicardo/spiffe-vault-demo/tree/main" target="_blank" rel="noopener noreferrer">demos</a>&nbsp;for customers, MVPs, experiments in my homelab, or a personal website. Some other times it&apos;s presentations or workshops to explain technical concepts. My focus is on finding out how technology can help organizations achieve their goals.
               </p>
               <p className="font-mono text-sm text-gray-300">
                 Currently helping businesses <a className='alink' href="https://www.hashicorp.com/" target="_blank" rel="noopener noreferrer">do cloud right @HashiCorp</a>

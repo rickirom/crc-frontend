@@ -58,7 +58,7 @@ provider "aws" {
 
 resource "aws_acm_certificate" "crc_cert" {
   provider          = aws.us_east_1
-  domain_name       = "${var.environment}.${var.domain_name}"
+  domain_name       = local.website_domain_name
   validation_method = "DNS"
   lifecycle { create_before_destroy = true }
 }
@@ -76,7 +76,7 @@ resource "aws_acm_certificate_validation" "crc_cert_validation" {
 
 resource "aws_cloudfront_origin_access_control" "site" {
   name                              = "${aws_s3_bucket.crc_bucket.id}-oac"
-  description                       = "OAC for ${var.domain_name}"
+  description                       = "OAC for ${local.website_domain_name}"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -90,9 +90,9 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = var.domain_name
+  comment             = local.website_domain_name
   default_root_object = "index.html"
-  aliases             = ["${var.environment}.${var.domain_name}"]
+  aliases             = [local.website_domain_name]
 
   origin {
     origin_id                = "s3-${aws_s3_bucket.crc_bucket.id}"

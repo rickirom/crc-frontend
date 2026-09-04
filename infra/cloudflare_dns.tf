@@ -4,6 +4,10 @@ data "cloudflare_zone" "r2" {
   }
 }
 
+locals {
+  website_domain_name = var.environment == "prod" ? var.domain_name : "${var.environment}.${var.domain_name}"
+}
+
 # Cloudflare provider v5: resource is cloudflare_dns_record, field is `content`.
 # On v4 it's cloudflare_record with `value`.
 resource "cloudflare_dns_record" "cert_validation" {
@@ -25,7 +29,7 @@ resource "cloudflare_dns_record" "cert_validation" {
 
 resource "cloudflare_dns_record" "website" {
   zone_id = data.cloudflare_zone.r2.id
-  name    = "${var.environment}.${var.domain_name}"
+  name    = local.website_domain_name
   content = aws_cloudfront_distribution.site.domain_name
   type    = "CNAME"
   ttl     = 60

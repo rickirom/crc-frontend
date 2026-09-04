@@ -17,7 +17,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6">
+    <section id="contact" className="py-24 px-6 h-[100dvh] flex flex-col justify-center">
       <div className="max-w-3xl mx-auto space-y-12">
         <div className="space-y-2">
           <h2 className="font-mono text-xs text-gray-500 tracking-widest">/ contact</h2>

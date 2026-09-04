@@ -1,0 +1,106 @@
+name: CI/CD - Frontend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  id-token: write   # required for GitHub OIDC -> AWS
+  contents: read
+
+env:
+  AWS_REGION: eu-central-1             # adjust to your region
+  S3_BUCKET: riki.sh        # adjust
+  CLOUDFRONT_DISTRIBUTION_ID: your-distribution-id  # adjust
+
+jobs:
+  ci:
+    name: Lint, Typecheck, Test, Build
+    runs-on: ubuntu-latest
+    outputs:
+      build-succeeded: ${{ steps.build.outcome == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test --if-present
+
+      - name: Generate resume data
+        run: npm run generate:resume
+
+      - name: Build (next build -> ./out)
+        id: build
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-static-export
+          path: ./out
+          retention-days: 1
+
+  # --- Terraform via HCP Terraform (API-driven workspace) ---
+  # Uncomment and configure once you're ready to wire this job in.
+  # It uses hashicorp/tfc-workflows-github as per your architecture.
+  #
+  # terraform:
+  #   name: HCP Terraform Plan + Apply
+  #   needs: ci
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  #     TF_CLOUD_ORGANIZATION: your-org
+  #     TF_WORKSPACE: your-workspace
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: hashicorp/tfc-workflows-github@v1.3.2
+  #       id: upload
+  #       ...
+  #     (see hashicorp/tfc-workflows-github docs for upload-configuration,
+  #      create-run, apply-run action sequence)
+
+  deploy:
+    name: Deploy to S3 + Invalidate CloudFront
+    needs: ci   # add "terraform" here once that job exists
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: next-static-export
+          path: ./out
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-deploy-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync to S3
+        run: aws s3 sync ./out s3://${{ env.S3_BUCKET }} --delete
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"

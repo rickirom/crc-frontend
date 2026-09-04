@@ -1,4 +1,4 @@
-import PDFDocument, { text } from 'pdfkit'
+import PDFDocument from 'pdfkit'
 import SVGtoPDF from 'svg-to-pdfkit';
 import fs from 'fs'
 import path from 'path'
@@ -27,8 +27,10 @@ const GITHUB_PATH = "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.38
 //Function to render an SVG path as an icon in the PDF:
 const iconSvg = (path: string, color = "#0f172a") => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}"><path d="${path}"/></svg>`;
 
-SVGtoPDF(doc, iconSvg(LINKEDIN_PATH), 367, 82, { width: 12, height: 12 });
-SVGtoPDF(doc, iconSvg(GITHUB_PATH), 478, 82, { width: 12, height: 12 });
+const offsetX = 280;
+
+SVGtoPDF(doc, iconSvg(LINKEDIN_PATH), offsetX, 82, { width: 12, height: 12 });
+SVGtoPDF(doc, iconSvg(GITHUB_PATH), offsetX + 75, 82, { width: 12, height: 12 });
 
 const out = path.join(process.cwd(), 'public', 'resume.pdf')
 doc.pipe(fs.createWriteStream(out))
@@ -69,8 +71,8 @@ doc
     .text(`${RESUME.city}  |  `, { continued: true }) 
     .font('IBMPlexSans').text(`${RESUME.email}  ·  ${RESUME.phone}  |   `, { continued: true })
     .fillColor('#2757c7') //toggle color to blue for links
-    .text(`         ${RESUME.linkedin}  ·`, { continued: true , link: `https://linkedin.com${RESUME.linkedin}` })
-    .text(`         ${RESUME.github}`, { align: "right", link: `https://github.com${RESUME.github}` })
+    .text(`      ${RESUME.linkedin}`, { continued: true , link: `https://linkedin.com${RESUME.linkedin}` })
+    .text(`         ${RESUME.github}`, { link: `https://github.com${RESUME.github}` })
 
 doc.fillColor('black')
 
@@ -95,7 +97,8 @@ for (const job of RESUME.experience) {
 section('Education')
 for (const edu of RESUME.education) {
   rowLR(edu.institution, 'IBMPlexSans-Medium', edu.period, 'IBMPlexSans', 10)
-  doc.font('IBMPlexSans-Italic').fontSize(10).text(edu.degree, MARGIN)
+  rowLR(edu.degree, 'IBMPlexSans-Italic', edu.location, 'IBMPlexSans', 10)
+//   doc.font('IBMPlexSans-Italic').fontSize(10).text(edu.degree, MARGIN)
   doc.moveDown(0.15)
   for (const h of edu.highlights) bullet(h)
   doc.moveDown(0.4)

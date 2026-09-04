@@ -19,7 +19,7 @@ variable "domain_name" {
 variable "environment" {
   description = "Environment name for the deployment."
   type        = string
-  default     = "dev"
+  default     = "prod"
 }
 
 variable "cloudflare_email" {

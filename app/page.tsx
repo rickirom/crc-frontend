@@ -1,4 +1,4 @@
-import AboutSection from '@/components/sections/AboutSection'
+import AboutSection from '@/components/sections/HomeSection'
 import LogoNew from '@/components/LogoNew'
 // import Navbar from '@/components/Navbar'
 

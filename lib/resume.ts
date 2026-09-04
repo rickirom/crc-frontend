@@ -1,7 +1,7 @@
 export const RESUME = {
   name: 'Ricardo Romero',
   city: 'Madrid, Spain',
-  email: 'ricardorompar@hotmail.com',
+  email: 'me@riki.sh',
   linkedin: '/in/rickirom',
   github: '/rickirom',
   phone: '+34 664 421 942',
@@ -49,6 +49,7 @@ export const RESUME = {
   education: [
     {
       institution: 'IE University',
+      location: 'Madrid, Spain',
       degree: 'Master in Computer Science & Business Technology',
       period: 'Sep 2023 – Jul 2024',
       highlights: [
@@ -58,6 +59,7 @@ export const RESUME = {
     },
     {
       institution: 'Escuela Politécnica Nacional',
+      location: 'Quito, Ecuador',
       degree: 'Bachelor in Electronics & Control Engineering',
       period: 'Sep 2015 – May 2021',
       highlights: [
@@ -78,18 +80,6 @@ export const RESUME = {
       link: {
         label: 'GitHub',
         href: 'https://github.com/ricardorompar/cloudResumeChallenge',
-      },
-    },
-    {
-      title: '3DOF Helicopter',
-      subtitle: "Bachelor's thesis",
-      description:
-        'Low-cost 3-DOF helicopter testbench controlled by hand gestures and arm movements using a Myo Armband. Demonstrated effective multimodal control via gesture recognition and IMU data.',
-      image: '/3dof.png',
-      tags: ['Python', 'Myo Armband', 'Control Systems', 'IMU'],
-      link: {
-        label: 'Thesis',
-        href: 'https://bibdigital.epn.edu.ec/handle/15000/22245',
       },
     },
     {
@@ -114,6 +104,18 @@ export const RESUME = {
       link: {
         label: 'GitHub',
         href: 'https://github.com/ricardorompar/full-stack-fastapi-mongo-template',
+      },
+    },
+    {
+      title: '3DOF Helicopter',
+      subtitle: "Bachelor's thesis",
+      description:
+        'Low-cost 3-DOF helicopter testbench controlled by hand gestures and arm movements using a Myo Armband. Demonstrated effective multimodal control via gesture recognition and IMU data.',
+      image: '/3dof.png',
+      tags: ['Python', 'Myo Armband', 'Control Systems', 'IMU'],
+      link: {
+        label: 'Thesis',
+        href: 'https://bibdigital.epn.edu.ec/handle/15000/22245',
       },
     },
   ],
