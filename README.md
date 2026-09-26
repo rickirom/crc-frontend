@@ -10,3 +10,4 @@ The infra required for this project:
 - S3 permissions
 - Cloudfront distribution
 - DNS configuration (managed by Cloudflare)
+

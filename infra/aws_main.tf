@@ -3,7 +3,7 @@
 #######################################
 
 resource "aws_s3_bucket" "crc_bucket" {
-  bucket        = "${var.environment}.${var.domain_name}"
+  bucket        = local.website_domain_name
   force_destroy = true
 }
 
