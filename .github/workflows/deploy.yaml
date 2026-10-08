@@ -13,7 +13,7 @@ permissions:
 env:
   AWS_REGION: eu-central-1
   S3_BUCKET: riki.sh 
-  CLOUDFRONT_DISTRIBUTION_ID: your-distribution-id
+  AWS_ACCOUNT_ID: your-account-id
 
 jobs:
   ci:
@@ -66,10 +66,11 @@ jobs:
   #   needs: ci
   #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
   #   runs-on: ubuntu-latest
+  #   environment: prod
   #   env:
   #     TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #     TF_CLOUD_ORGANIZATION: your-org
-  #     TF_WORKSPACE: your-workspace
+  #     TF_CLOUD_ORGANIZATION: ricardorompar
+  #     TF_WORKSPACE: crc-frontend
   #   steps:
   #     - uses: actions/checkout@v4
   #     - uses: hashicorp/tfc-workflows-github@v1.3.2
@@ -93,14 +94,23 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-deploy-role
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-actions-deploy-role
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync to S3
         run: aws s3 sync ./out s3://${{ env.S3_BUCKET }} --delete
 
+      - name: Look up CloudFront distribution
+        id: cf
+        run: |
+            ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Aliases.Items && contains(Aliases.Items, '${{ env.S3_BUCKET }}')].Id | [0]" \
+            --output text)
+            [ "$ID" != "None" ] || { echo "No distribution found for ${{ env.S3_BUCKET }}"; exit 1; }
+            echo "id=$ID" >> "$GITHUB_OUTPUT"
+
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id ${{ steps.cf.outputs.id }} \
             --paths "/*"

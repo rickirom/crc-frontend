@@ -1,4 +1,12 @@
 terraform {
+  #migrate
+  cloud {
+    organization = "ricardorompar"
+    workspaces {
+      project = "CRC"
+      name = "crc-frontend"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
