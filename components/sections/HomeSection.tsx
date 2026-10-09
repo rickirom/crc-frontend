@@ -37,12 +37,12 @@ const LINKS = {
   "X/Twitter": { link: "https://twitter.com/rickirom_", Icon: X },
   "Instagram": { link: "https://instagram.com/rickirom_", Icon: Instagram},
   "WhatsApp": { link: "https://wa.me/34664421942", Icon: WhatsApp},
-  "Mail": { link: "mailto:ricardorompar@hotmail.com", Icon: Mail}
+  "Mail": { link: "mailto:me@riki.sh", Icon: Mail}
 } as const;
 
-export default function AboutSection() {
+export default function HomeSection() {
   return (
-    <section id="about" className="pt-30 px-6 border-gray-800">
+    <section id="home" className="pt-30 px-6 border-gray-800">
       <div className="max-w-3xl mx-auto space-y-12">
         
 
