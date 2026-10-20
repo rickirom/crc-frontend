@@ -17,7 +17,7 @@ export const RESUME = {
       location: 'Madrid, Spain',
       bullets: [
         'Developed demos, documentation and presentations to support technical engagements for the wider team.',
-        'Closed multiple deals as part of the Corporate SE team, contributing to $500k+ pipeline growth in the first year.',
+        'Closed multiple deals as part of the Corporate SE team, contributing to $600k+ worth of new business in the first 8 months.',
         'Influenced $10M+ ARR in first 6 months through technical engagements with Enterprise customers as part of the SE Hub team.',
         'Led technical webinars and workshops on Terraform, Vault, and Boundary for various Enterprise clients.',
         'Architected cloud infrastructure solutions aligned with the HashiCorp product suite.',
