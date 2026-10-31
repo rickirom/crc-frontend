@@ -55,30 +55,45 @@ jobs:
           retention-days: 1
 
   # --- Terraform via HCP Terraform (API-driven workspace) ---
-  # Uncomment and configure once you're ready to wire this job in.
-  # It uses hashicorp/tfc-workflows-github as per your architecture.
   #
-  # terraform:
-  #   name: HCP Terraform Plan + Apply
-  #   needs: ci
-  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-  #   runs-on: ubuntu-latest
-  #   environment: prod
-  #   env:
-  #     TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #     TF_CLOUD_ORGANIZATION: ricardorompar
-  #     TF_WORKSPACE: crc-frontend
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: hashicorp/tfc-workflows-github@v1.3.2
-  #       id: upload
-  #       ...
-  #     (see hashicorp/tfc-workflows-github docs for upload-configuration,
-  #      create-run, apply-run action sequence)
+  terraform-apply:
+    name: HCP Terraform Plan + Apply
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      # No need to pass as inputs to each action
+      TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_WORKSPACE: "crc-frontend"
+      TF_DIRECTORY: "./infra"
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.2
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.TF_DIRECTORY }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.2
+        id: create-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.2
+        # assign id attribute to reference in subsequent steps
+        id: apply
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Confirmed from GitHub Actions CI"
+
 
   deploy:
     name: Deploy to S3 + Invalidate CloudFront
-    needs: ci   # add "terraform" here once that job exists
+    needs: [ci, terraform-apply]   
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     # Important:
