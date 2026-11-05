@@ -12,7 +12,7 @@ const INTERESTS = [
 ]
 
 const scrambleValues = [
-    "Solutions Engineer III", 
+    "Solutions Engineer", 
     "DevOps Practitioner", 
     "An atom in the universe", 
     "A universe of atoms" , 
