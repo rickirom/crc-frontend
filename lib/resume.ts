@@ -187,6 +187,7 @@ export const RESUME = {
   languages: [
     { language: 'English', proficiency: 'Full professional proficiency' },
     { language: 'Spanish', proficiency: 'Native' },
-    { language: 'French', proficiency: 'Limited working proficiency' },
+    { language: 'German', proficiency: 'Elementary' },
+    { language: 'French', proficiency: 'Elementary' }
   ],
 }
