@@ -5,7 +5,7 @@ import { LoaderCircle } from 'lucide-react'
 import Link from 'next/link'
 
 
-const VISITOR_COUNTER_URL = 'https://vlt33ldw66.execute-api.eu-central-1.amazonaws.com/increment' // Replace with actual Lambda/API Gateway URL
+const VISITOR_COUNTER_URL = 'https://1fecyrmub9.execute-api.eu-central-1.amazonaws.com/increment' // Replace with actual Lambda/API Gateway URL
 
 const NAV_ITEMS = [
   { id: 'home', label: 'home', href: '/' },
