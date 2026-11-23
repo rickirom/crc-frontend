@@ -34,7 +34,7 @@ const scrambleValues = [
 const LINKS = {
   "Github": { link: "https://github.com/rickirom", Icon: GitHub },
   "LinkedIn": { link: "https://linkedin.com/in/rickirom", Icon: LinkedIn },
-  "X/Twitter": { link: "https://twitter.com/rickirom_", Icon: X },
+  "X/Twitter": { link: "https://twitter.com/rickirom", Icon: X },
   "Instagram": { link: "https://instagram.com/rickirom_", Icon: Instagram},
   "WhatsApp": { link: "https://wa.me/34664421942", Icon: WhatsApp},
   "Mail": { link: "mailto:me@riki.sh", Icon: Mail}
